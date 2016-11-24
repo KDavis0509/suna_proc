@@ -1,75 +1,40 @@
-# cimis : A python package to query the California Department of Water Resources CIMIS Weather Station Network (WSN) for meteorological data
+# suna_proc : A python package to process Satlantic SUNA v2 internally logged Full_ASCII data files that are created
+when the sensor is deployed in interval mode.
 
+suna_proc is a python package that reads suna log files into a pandas timeseries dataframe.
+Burst data is grouped by time, processed for outlier detection using the median absolute deviation, 
+converted to a pandas dataframe and saved to a csv file.
 
-cimis is a python wrapper for communication with the CIMIS WSN API.
-Queried station data is returned as a pandas dataframe timeseries (or a list of dataframes in the case that multiple stations were queried). 
-CIMIS station info returned as a dictionary.
+See http://satlantic.com/suna for more information on the Satlantic SUNA v2.
 
-See http://et.water.ca.gov/Rest/Index for more information on the CIMIS API.
-
-See examples/cimis_example.py for usage
+See examples for package usage
 
 Requirements:
 --------------
-### CIMIS user account and appKey ###
+
 ### Required packages: ###
 
 * datetime
-* json
+* glob
 * numpy
 * pandas
-* urllib2
+* statsmodels
 
-Example: Retrieve water year 2016 daily data from Twitchell Island, station 140
+Example: Process a directory of daily log files and save as a pandas dataframe
 -------------------------------------------------------------------------------
 :::python
-
-	import datetime
-	import numpy as np
-	from cimis import run_cimis, retrieve_cimis_station_info, write_output_file
-
-	def main():
-		appKey = ''  # JFS appKey
-		# list of CIMIS station ID's from which to query data
-		# sites = list(np.arange(212))  # uncomment to query every CIMIS site
-		# sites = [140, 2, 5, 6]  # query a list of known active sites
-		sites = [140]  # uncomment to query single site
-		sites = [str(i) for i in sites]  # convert list of ints to strings
-		# pull daily data; other options are 'hourly' and 'default'
-		# edit convert_data_items function to customize list of queried parameters
-		station_info = retrieve_cimis_station_info()
-		pulled_site_names = [station_info[x] for x in sites]
-		Iteminterval = 'daily'
-		# start date fomat in YYYY-MM-DD
-		start = '2016-10-01'
-		# end date fomat in YYYY-MM-DD
-		# e.g. pull all data from start until today
-		end = datetime.datetime.now().strftime("%Y-%m-%d")
-		# retrieve the data for each station and place into a list of dataframes
-		df = run_cimis(appKey, sites, start, end, Iteminterval)
-		return pulled_site_names, df
-
-
-	if __name__ == "__main__":
-		# define the output file path
-		xls_path = 'CIMIS_query.xlsx'
-		# collect queried station name and data in a list of dataframes
-		site_names, cimis_data = main()
-		# write the each station data to a unique sheet into the output xlsx file
-		write_output_file(xls_path, cimis_data, site_names)
-
 
 
 Installation:
 ------------
 
 Or you can get the source code from bitbucket
-https://bitbucket.org/geofranco/cimis
+https://bitbucket.org/geofranco/suna_proc
 
 ::
 
-	$ git clone https://geofranco@bitbucket.org/geofranco/cimis.git
-	$ cd cimis
+	$ git clone https://geofranco@bitbucket.org/geofranco/suna_proc.git
+	$ cd suna_proc
 	$ python setup.py install
 
 
