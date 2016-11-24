@@ -5,4 +5,4 @@ __pycache__
 *.bin
 *.egg-info
 archive/
-data/
+example_data/

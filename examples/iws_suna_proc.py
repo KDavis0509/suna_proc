@@ -28,7 +28,6 @@ from suna_proc import process
 def main(file_direc, fmatch, suna_version, interval,
          UTC_tz_offset, datetime_name):
     # set the ouTfile name based on the name of the file directory
-
     no3_mad_raw = process(file_direc, fmatch, suna_version, interval,
                           UTC_tz_offset, datetime_name)
     # filter out NO3 conc data when sensor in air (typically, NO3 < 0.1 mg/L),
@@ -49,7 +48,7 @@ def main(file_direc, fmatch, suna_version, interval,
 if __name__ == "__main__":
     # ============================BEGIN USER VARIABLES=========================
     # DEFINE FILE CONTAINING DIRECTORY
-    file_direc = r'C:\Users\saraceno\Documents\Code\Python\repos\suna_proc\examples\data'
+    file_direc = r'C:\Users\saraceno\Documents\Code\Python\repos\suna_proc\examples\example_data'
     fmatch = 'D*.csv'  # match and process all daily log files
     out_name = file_direc.split(os.sep)[-1]
     suna_version = 2
