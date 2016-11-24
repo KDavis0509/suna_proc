@@ -4,7 +4,7 @@
 This script processes SUNA version 2 full_ascii log data file located in a
 directory
 
-:REQUIRES:
+:REQUIRES: matplotlib, os, suna_proc
 
 :TODO:
 
@@ -60,6 +60,6 @@ if __name__ == "__main__":
     # name datetime index based on time zone
     datetime_name = "Datetime (EST)"
     # ==============================END USER VARIABLES=========================
-    #call main routine to process and plot data
+    # call main routine to process and plot data
     main(file_direc, fmatch, suna_version, interval,
          UTC_tz_offset, datetime_name)

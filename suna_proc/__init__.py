@@ -3,7 +3,7 @@
 :DESCRIPTION:Functions to process Satlantic SUNA version 2 log data files
 study
 
-:REQUIRES:  numpy, statsmodels, pandas
+:REQUIRES:  datetime, glob, os, numpy, statsmodels, pandas
 
 :TODO:
 
@@ -113,27 +113,6 @@ def custom_mad_func(array_like, criteria=2.5, **kwargs):
     b = ma.masked_outside(array_like, high, low)
     c = ma.compressed(b)
     return np.nanmedian(c)
-
-
-#def read_log_file(textfile, kind='daily', utc_offset=-8):
-#    """Read SUNA v2 daily log file and return a dataframe"""
-#    if kind is 'daily':
-#        header = get_header(version=2)
-#        dcol = header[1]
-#        tcol = header[2]
-#        # read in csvfile to a dataframe
-#        df = pd.read_csv(textfile, header=None, skiprows=14)
-#        # ditch frame header column, we crete our own
-#        df.drop(df.columns[0], axis=1, inplace=True)
-#        df.columns = header[1:]
-#        # remove rows with nonsensical date year and doy
-#        df = df[df[dcol] != 0]
-#        # remove rows with nonsensical hod
-#        df = df[(df[tcol] < 24) & (df[tcol] > 0)]
-#        df.index = df.apply(lambda row: date_time(row[dcol],
-#                                                  row[tcol]), axis=1)
-#        df.index = pd.DatetimeIndex(df.index) + pd.DateOffset(hours=utc_offset)
-#        return df
 
 
 def rd_sunav2_logfile(textfile, utc_offset=-8):
