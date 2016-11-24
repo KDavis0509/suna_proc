@@ -28,6 +28,40 @@ import statsmodels.robust.scale as smc
 # =============================================================================
 
 
+def process(file_direc, fmatch, suna_version, interval, UTC_tz_offset,
+            datetime_name):
+
+        out_name = file_direc.split(os.sep)[-1]
+
+        files = list_files(file_direc, fmatch)
+
+        # readin all data files into one large master dataframe
+        frame = pd.concat((rd_sunav2_logfile(os.path.join(file_direc, f),
+                                             utc_offset=UTC_tz_offset)
+                           for f in files))
+        # name the index column as the datetime
+        frame.index.name = datetime_name
+
+        # group frame based on defineid sampling interval
+        grouped = frame.groupby(pd.TimeGrouper(str(interval)+'Min'),
+                                sort=False)
+
+        # process full spectra
+        # take mean of full spectra
+        SUNA_mean = grouped.aggregate('mean')
+        # save mean of full spectra to csv file
+        SUNA_mean.to_csv(os.path.join(file_direc,
+                                           (out_name + '_mean.csv')))
+        # take median of full spectra
+        SUNA_median = grouped.aggregate('median')
+        # save median of full spectra to csv file
+        SUNA_median.to_csv(os.path.join(file_direc,
+                                             (out_name + '_median.csv')))
+        # calculate NO3 MAD for each burst
+        no3_mad_raw = grouped['Nitrogen in nitrate [mg/L]'].aggregate(custom_mad_func)
+        return no3_mad_raw
+
+
 def get_header(version=2):
     """This function assigns the SUNA file header based on suna version"""
     if version == 1:
