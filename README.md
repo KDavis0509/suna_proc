@@ -71,12 +71,12 @@ Installation:
 ------------
 
 Or you can get the source code from bitbucket
-https://bitbucket.org/geofranco/suna_proc
+https://bitbucket.org/geofranco/suna_process
 
 ::
 
-	$ git clone https://geofranco@bitbucket.org/geofranco/suna_proc.git
-	$ cd suna_proc
+	$ git clone https://geofranco@bitbucket.org/geofranco/suna_process.git
+	$ cd suna_process
 	$ python setup.py install
 
 
