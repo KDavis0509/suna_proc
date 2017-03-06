@@ -30,18 +30,16 @@ Example: Process a directory of daily log files and save as a pandas dataframe
 
 	def main(file_direc, fmatch, suna_version, interval,
 			 UTC_tz_offset, datetime_name):
-		# set the ouTfile name based on the name of the file directory
-
 		no3_mad_raw = process(file_direc, fmatch, suna_version, interval,
 							  UTC_tz_offset, datetime_name)
-		# filter out NO3 conc data when sensor in air (typically, NO3 < 0.1 mg/L),
+		# filter out nitrate conc data when sensor in air (typically, NO3 < 0.1 mg/L),
 		# there is an error (NO3 = -1), or concentration exceeds concentration
 		# limit
 		no3_mad = no3_mad_raw[(no3_mad_raw > 0.1) & (no3_mad_raw < 58)]
 		# write mad proced nitrata concentration output to csv file
 		no3_mad.to_csv(os.path.join(file_direc, (out_name + '_SUNA_NO3_mad.csv')))
 
-		# plot the raw and mad processed nitrate concentration timeseries data
+		# plot the raw and mad processed nitrate concentration time series data
 		plt.figure()
 		no3_mad_raw.plot(marker='*', label='raw', legend=True)
 		ax2 = no3_mad.plot(marker='o', label='mad_screened', legend=True)
@@ -71,11 +69,10 @@ Installation:
 ------------
 
 Or you can get the source code from bitbucket
-https://bitbucket.org/geofranco/suna_process
-
+https://github.com/OneGneissGuy/suna_proc
 ::
 
-	$ git clone https://geofranco@bitbucket.org/geofranco/suna_process.git
+	$ git clone https://github.com/OneGneissGuy/suna_proc.git
 	$ cd suna_process
 	$ python setup.py install
 
