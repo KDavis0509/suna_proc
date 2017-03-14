@@ -68,14 +68,15 @@ Example: Process a directory of daily log files and save as a pandas dataframe
 Installation:
 ------------
 
-Or you can get the source code from bitbucket
-https://github.com/OneGneissGuy/suna_proc
-::
+Install suna_proc from the command line by following these steps:
 
-	$ git clone https://github.com/OneGneissGuy/suna_proc.git
-	$ cd suna_process
-	$ python setup.py install
+    $ git clone https://github.com/OneGneissGuy/suna_proc.git
+    $ cd suna_process
+    $ python setup.py install
+	
+OR
 
+Copy the [source code](https://github.com/OneGneissGuy/suna_proc/tree/master/suna_process) directly
 
 Disclaimer:
 ----------
