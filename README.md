@@ -1,6 +1,6 @@
 # suna_proc : a python package to process Satlantic SUNA V2 data files 
 
-suna_proc is a python package that reads SUNA data (log files) into a pandas timeseries dataframe.
+suna_proc is a python package that reads SUNA data (log files) into a pandas datetime indexed dataframe.
 Burst data is grouped by time, processed for outlier detection using the median absolute deviation, 
 converted to a pandas dataframe and saved to a csv file.
 
@@ -25,7 +25,7 @@ Requirements:
 * pandas
 * statsmodels
 
-Example: Process a directory of daily log files and save as a pandas dataframe
+Example: Process a directory of daily log files into a pandas dataframe and save to a csv file
 -------------------------------------------------------------------------------
 :::python
 
