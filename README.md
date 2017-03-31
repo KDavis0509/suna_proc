@@ -7,6 +7,10 @@ converted to a pandas dataframe and saved to a csv file.
 See http://satlantic.com/suna for more information on the Satlantic SUNA v2.
 
 See examples for package usage
+Compatability:
+--------------
+* Windows 7
+* python 2.7+
 
 Requirements:
 --------------
