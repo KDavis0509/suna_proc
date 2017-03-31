@@ -3,7 +3,10 @@
 :DESCRIPTION:Functions to process Satlantic SUNA version 2 log data files
 study
 
-:REQUIRES:  datetime, glob, os, numpy, statsmodels, pandas
+:REQUIRES:  
+python 2.7+ (anaconda dist
+packages:
+datetime, glob, os, numpy, statsmodels, pandas
 
 :TODO:
 
@@ -16,6 +19,7 @@ Wed Aug 10 14:45:07 2016
 # =============================================================================
 # IMPORT STATEMENTS
 # =============================================================================
+from __future__ import print_function
 import datetime
 import glob
 import os
@@ -51,12 +55,12 @@ def process(file_direc, fmatch, suna_version, interval, UTC_tz_offset,
         SUNA_mean = grouped.aggregate('mean')
         # save mean of full spectra to csv file
         SUNA_mean.to_csv(os.path.join(file_direc,
-                                           (out_name + '_mean.csv')))
+                                     (out_name + '_mean.csv')))
         # take median of full spectra
         SUNA_median = grouped.aggregate('median')
         # save median of full spectra to csv file
         SUNA_median.to_csv(os.path.join(file_direc,
-                                             (out_name + '_median.csv')))
+                          (out_name + '_median.csv')))
         # calculate NO3 MAD for each burst
         no3_mad_raw = grouped['Nitrogen in nitrate [mg/L]'].aggregate(custom_mad_func)
         return no3_mad_raw
@@ -71,7 +75,7 @@ def get_header(version=2):
                   'DARK_AVG', 'CHECK SUM']
         for i in range(1, 227):  # write the channel header
             col = "CHANNEL(" + str(i) + ")"
-            header.insert(13+i, col)
+            header.insert(13 + i, col)
     elif version == 2:
         header = ['Header and Serial Number', 'Date year and day-of-year',
                   'Time, hours of day', 'Nitrate concentration [uM]',
@@ -126,7 +130,7 @@ def rd_sunav2_logfile(textfile, utc_offset=-8):
                          error_bad_lines=False)
         # ditch frame header column
         df.drop(df.columns[0], axis=1, inplace=True)
-        print "Processing file:", textfile[-12:], "please wait..."
+        print("Processing file:", textfile[-12:], "please wait...")
         df.columns = header[1:]
         # remove rows with nonsensical date year and doy
         df = df[df[dcol] != 0]
@@ -137,7 +141,7 @@ def rd_sunav2_logfile(textfile, utc_offset=-8):
         df.index = pd.DatetimeIndex(df.index) + pd.DateOffset(hours=utc_offset)
         return df
     except:
-        print "Could not process file:", textfile[-12:], "skipping..."
+        print("Could not process file:", textfile[-12:], "skipping...")
 
 
 def list_files(path, fmatch):
