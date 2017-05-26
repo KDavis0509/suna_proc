@@ -17,8 +17,6 @@ Requirements:
 
 ### Required packages: ###
 
-* datetime
-* glob
 * matplotlib
 * numpy
 * pandas
