@@ -5,9 +5,9 @@
 study
 
 :REQUIRES:  
-python 2.7+ (anaconda dist
+python 2.7+ (anaconda dist)
 packages:
-datetime, glob, os, numpy, statsmodels, pandas
+numpy, statsmodels, pandas
 
 :TODO:
 
