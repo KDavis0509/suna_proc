@@ -31,13 +31,36 @@ import statsmodels.robust.scale as smc
 # =============================================================================
 # METHODS
 # =============================================================================
+def get_tz_name(utc_offset):
+   
+    if utc_offset == -8:
+        tz_name= '(US/Pacific)'
+    elif utc_offset == -7:
+        tz_name=  '(US/Mountain)'
+    elif utc_offset == -6:
+        tz_name= '(US/Central)'
+    elif utc_offset == -5:
+        tz_name= '(US/Eastern)'
+    elif utc_offset == -4:
+        tz_name= '(US/Atlantic)'
+    elif utc_offset == 0:
+        tz_name= '(GMT)'
+    else: 
+        tz_name= '(Unknown)'
+    return "Datetime " + tz_name
 
+
+
+
+if __name__ == "__main__":
+    utc_offset= 3
+    timezone = get_tz_name(utc_offset)
 
 def process(file_direc, fmatch, suna_version, interval, UTC_tz_offset,
             datetime_name):
 
-        out_name = file_direc.split(os.sep)[-1]
-
+        # out_name = file_direc.split(os.sep)[-1]
+        out_name = ''
         files = list_files(file_direc, fmatch)
 
         # readin all data files into one large master dataframe
@@ -48,20 +71,19 @@ def process(file_direc, fmatch, suna_version, interval, UTC_tz_offset,
         frame.index.name = datetime_name
 
         # group frame based on defineid sampling interval
-        grouped = frame.groupby(pd.TimeGrouper(str(interval)+'Min'),
+        grouped = frame.groupby(pd.TimeGrouper(str(interval) + 'Min'),
                                 sort=False)
-
         # process full spectra
         # take mean of full spectra
         SUNA_mean = grouped.aggregate('mean')
         # save mean of full spectra to csv file
         SUNA_mean.to_csv(os.path.join(file_direc,
-                                     (out_name + '_mean.csv')))
+                                     (out_name + 'mean.csv')))
         # take median of full spectra
         SUNA_median = grouped.aggregate('median')
         # save median of full spectra to csv file
         SUNA_median.to_csv(os.path.join(file_direc,
-                          (out_name + '_median.csv')))
+                          (out_name + 'median.csv')))
         # calculate NO3 MAD for each burst
         no3_mad_raw = grouped['Nitrogen in nitrate [mg/L]'].aggregate(custom_mad_func)
         return no3_mad_raw

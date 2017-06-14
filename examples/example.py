@@ -19,7 +19,7 @@ directory
 # =============================================================================
 import os
 import matplotlib.pyplot as plt 
-from suna_process import process
+from suna_process import process, get_tz_name
 # =============================================================================
 # MAIN FUNCTION
 # =============================================================================
@@ -37,7 +37,7 @@ def main(file_direc, fmatch, suna_version, interval,
     # limit
     no3_mad = no3_mad_raw[(no3_mad_raw > low_limit) & (no3_mad_raw < high_limit)]
     # write mad processed nitrate concentration output to csv file
-    no3_mad.to_csv(os.path.join(file_direc, (out_name + '_SUNA_NO3_mad.csv')))
+    no3_mad.to_csv(os.path.join(file_direc, 'SUNA_NO3_mad.csv'))
 
     # plot the raw and mad processed nitrate concentration timeseries data
     if plot:
@@ -53,16 +53,16 @@ if __name__ == "__main__":
     # Place files in 'data' folder
     cwd = os.getcwd()
     file_direc = os.path.join(cwd, 'data')
-    out_name = "processed"
     suna_version = 2
     # define sampling interval
     interval = 15  # in minutes
     # define timezone offset relative to UTC, in hours
     UTC_tz_offset = -5
     # name datetime index based on time zone
-    datetime_name = "Datetime (EST)"
+    datetime_name = get_tz_name(UTC_tz_offset)
+#    datetime_name = "Datetime (EST)"
     # ==============================END USER VARIABLES=========================
-    fmatch = 'D*.csv'  # match and process all daily csv files
+    fmatch = 'D2*.csv'  # match and process all daily csv files
     # call main routine to process and plot data
     main(file_direc, fmatch, suna_version, interval,
          UTC_tz_offset, datetime_name)
