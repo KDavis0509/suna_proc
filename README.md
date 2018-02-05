@@ -10,7 +10,7 @@ See http://satlantic.com/suna for more information on the Satlantic SUNA v2.
 Compatability:
 --------------
 * Windows 7
-* python 2.7+
+* python 2.7
 
 Requirements:
 --------------
